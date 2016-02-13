@@ -1,5 +1,5 @@
 //Yu-chi Chang, William Shyr
-//ychang64, wshy1
+//ychang64, wshyr1
 //EN.600.226
 //p1
 
@@ -95,10 +95,6 @@ public class CircularLList<T> implements List<T> {
      */
     public void clear() {
         this.size = 0;
-        this.head = new Node(null, null, null);
-        this.tail = new Node(null, this.head, null);
-        this.head.next = this.tail;
-        this.curr = this.head;  // because insert will insert after curr
     }
 
     /**
@@ -118,15 +114,22 @@ public class CircularLList<T> implements List<T> {
     // insert AFTER the current position.
     public boolean insert2(T t) {
         if (this.isEmpty()) { //empty list
-            curr = new Node(t, this.curr, this.curr);
-        } else if (this.size == 1) {  //size = 1
-            curr.setNext = new Node(t, this.curr, this.curr);
-            curr.prev.setNext(curr);
-            curr.next.setPrev(curr);
+            this.curr = new Node(t, this.curr, this.curr);
+        } else if (this.size == 1) {  // size = 1
+            this.curr.next = new Node(t, this.curr, this.curr);
+            this.curr.prev = this.curr.next; // link curr.prev to the new element
+            // this.curr = this.curr.next; // move curr to next element
+            this.head = this.curr
+            this.tail = this.curr.next;
+        } else 
+        } else if (this.curr == this.tail) {
+            this.tail = new Node(t, this.curr, this.head)
+        }
         } else {
-            curr = new Node(t, this.curr, this.curr.next);
-            curr.prev.setNext(curr);
-            curr.next.setPrev(curr);
+            this.curr = new Node(t, this.curr, this.curr.next);
+            this.curr.prev.next = this.curr;
+            this.curr.next.prev = this.curr;
+
         }
         this.size++;
         return true;
@@ -147,15 +150,14 @@ public class CircularLList<T> implements List<T> {
     }
 
     public boolean append2(T t) {
-        if (this.isEmpty()) {  // empty list
+        if (this.isEmpty() || this.size == 1) {  // empty list
             this.insert2();  // code reuse
-        } else if (this.size == 1) { // size = 1
-            this.insert2(); // this is essentially appending at the end of the list
         } else {
             Node temp = this.curr;        // hold onto original position
             this.curr = this.tail;        // move curr to the tail
-            this.insert(t);               // code reuse!
+            this.insert2(t);              // code reuse!
             this.curr = temp;             // restore cursor to original position
+
         }
         this.size++;
         return true;
@@ -235,13 +237,23 @@ public class CircularLList<T> implements List<T> {
      * Set the current position to the start of the list.
      */
     public void moveToStart() {
-
+        if (this.isEmpty()) {
+            this.curr = null;
+        }
+        else {
+            this.curr = head;
+        }
     }
 
     /**
      * Set the current position to the end of the list.
      */
     public void moveToEnd() {
+        if (this.isEmpty()) {
+            this.curr = null;
+        } else {
+            this.curr = tail;
+        }
     }
 
     /**
@@ -249,13 +261,14 @@ public class CircularLList<T> implements List<T> {
      * no change if already at beginning.
      */
     public void prev() {
+        curr.prev
     }
 
     /**
      * Move the current position one step right, no change if already at end.
      */
     public void next() {
-
+        curr.next
     }
 
     /**
