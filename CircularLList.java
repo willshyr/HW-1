@@ -104,7 +104,7 @@ public class CircularLList<T> implements List<T> {
      */
 
     public CircularLList() {
-        this.clear();  //code reuse
+        this.clear();//code reuse
     }
 
     /**
@@ -136,8 +136,8 @@ public class CircularLList<T> implements List<T> {
     public boolean insert2(T t) {
         if (this.isEmpty()) { //empty list
             curr = new Node(t, this.curr, this.curr);
-        } else if (this.size = 1) {  //size = 1
-            curr = new Node(t, this.curr, this.curr);
+        } else if (this.size == 1) {  //size = 1
+            curr.setNext = new Node(t, this.curr, this.curr);
             curr.prev.setNext(curr);
             curr.next.setPrev(curr);
         } else {
@@ -244,7 +244,7 @@ public class CircularLList<T> implements List<T> {
     }
 
     public int size() {
-         return this.size;
+        return this.size;
     }
 
 
@@ -254,6 +254,7 @@ public class CircularLList<T> implements List<T> {
      * Set the current position to the start of the list.
      */
     public void moveToStart() {
+
     }
 
     /**
