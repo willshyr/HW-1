@@ -110,10 +110,10 @@ public class CList<T> implements List<T> {
      */
     public void clear() {
         this.size = 0;
-        this.head = null;
-        this.tail = null;
-        this.head.next = this.tail;
-        this.curr = this.head;  // because insert will insert after curr
+        // this.head = null;
+        // this.tail = null;
+        // this.head.next = this.tail;
+        // this.curr = this.head;  // because insert will insert after curr
     }
 
     public void clear2() {
@@ -142,17 +142,19 @@ public class CList<T> implements List<T> {
             this.head = this.curr;
             this.tail = this.curr;
         } else if (this.size == 1) {  // size = 1
-            this.curr.next = new Node(t, this.curr, this.curr);
-            this.curr.prev = this.curr.next; // link curr.prev to the new element
-            this.tail = this.curr.next;
+            this.curr = new Node(t, this.curr, this.curr);
+            this.curr.prev.next = this.curr; // link curr.prev to the new element
+            this.tail = this.curr;
         } else if (this.size == 2) {
-            this.curr = new Node(t, this.curr, this.tail); //this.tail is the same as this.curr.next????
+            this.curr = new Node(t, this.curr, this.curr.next); //this.tail is the same as this.curr.next????
             this.curr.prev.next = this.curr;
             this.curr.next.prev = this.curr;
+            this.tail = this.curr;
         } else {
             this.curr = new Node(t, this.curr, this.curr.next);
             this.curr.prev.next = this.curr;
             this.curr.next.prev = this.curr;
+            this.tail = this.curr;
         }
         this.size++;
         return true;
@@ -347,5 +349,19 @@ public class CList<T> implements List<T> {
     }
     public void cprev() {
         this.curr = this.curr.prev;
+    }
+    public String toString() {
+        String result = "(";
+        this.moveToStart();
+        for (int i = 0; i < this.size; i++) {
+            result += this.curr.data;   // calls toString implicitly
+            if (i < this.size - 1) {
+                result += ", ";
+                this.next();
+            }
+
+        }
+        result += ")";
+        return result;
     }
 }

@@ -1,16 +1,15 @@
 public class CookingStation extends CList<CookingItem> {
-	
+
 	private String station; // station name
-	private 
 
 
 	public CookingStation(){
-		CList cookingStations = new CList (); 
+		CList cookingStation = new CList ();
 	}
 
 	// put a new dish at the end of the station
 	public void addItem(CookingItem it) {
-		
+
 	}
 
 
