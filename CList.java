@@ -342,7 +342,10 @@ public class CList<T> implements List<T> {
     public T getValue() {
         return curr.getData();
     }
-    public void loop() {
+    public void cnext() {
         this.curr = this.curr.next;
+    }
+    public void cprev() {
+        this.curr = this.curr.prev;
     }
 }
