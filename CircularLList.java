@@ -73,9 +73,9 @@ public class CircularLList<T> implements List<T> {
 
     }
 
-    /** Head sentinel node. */
+    /** Head node. */
     private Node head;
-    /** Tail sentinel node. */
+    /** Tail node. */
     private Node tail;
     /** Number of actual data nodes in list. */
     private int size;
@@ -115,21 +115,20 @@ public class CircularLList<T> implements List<T> {
     public boolean insert2(T t) {
         if (this.isEmpty()) { //empty list
             this.curr = new Node(t, this.curr, this.curr);
+            this.head = this.curr;
+            this.tail = this.curr;
         } else if (this.size == 1) {  // size = 1
             this.curr.next = new Node(t, this.curr, this.curr);
-            this.curr.prev = this.curr.next; // link curr.prev to the new element
-            // this.curr = this.curr.next; // move curr to next element
-            this.head = this.curr
+            this.curr.prev = this.curr.next;// link curr.prev to the new element
             this.tail = this.curr.next;
-        } else 
-        } else if (this.curr == this.tail) {
-            this.tail = new Node(t, this.curr, this.head)
-        }
+        } else if (this.size == 2) {
+            this.curr = new Node(t, this.curr, this.tail);
+            this.curr.prev.next = this.curr;
+            this.curr.next.prev = this.curr;
         } else {
             this.curr = new Node(t, this.curr, this.curr.next);
             this.curr.prev.next = this.curr;
             this.curr.next.prev = this.curr;
-
         }
         this.size++;
         return true;
@@ -157,7 +156,6 @@ public class CircularLList<T> implements List<T> {
             this.curr = this.tail;        // move curr to the tail
             this.insert2(t);              // code reuse!
             this.curr = temp;             // restore cursor to original position
-
         }
         this.size++;
         return true;
@@ -185,7 +183,7 @@ public class CircularLList<T> implements List<T> {
     public T remove2() {
         if (this.isEmpty()) {
             return null; //nothing is removed
-        } else if (this.size = 1) {
+        } else if (this.size == 1) {
             T val = this.curr.next.data;
             this.clear();
             return val;
@@ -261,14 +259,14 @@ public class CircularLList<T> implements List<T> {
      * no change if already at beginning.
      */
     public void prev() {
-        curr.prev
+        this.curr = this.curr.prev;
     }
 
     /**
      * Move the current position one step right, no change if already at end.
      */
     public void next() {
-        curr.next
+        this.curr = this.curr.next;
     }
 
     /**
@@ -291,7 +289,7 @@ public class CircularLList<T> implements List<T> {
         }
         curr = head; // head's position = 0
         for (int i = 0; i <= pos; i++) {  // < = ??
-            curr = curr.next(); // update curr
+            this.curr = this.curr.next; // update curr
         }
         return true;
     }
@@ -300,28 +298,17 @@ public class CircularLList<T> implements List<T> {
      * Return true if current position is at end of the list.
      * @return true if the current position is the end of the list
      */
-    public boolean isAtEnd() {
-        // dummy implementation
-        return false;
+    // public boolean isAtEnd() {
+    //     // dummy implementation
+    //     return false;
+    // }
   // Return true if current position is at end of the list
-  public boolean isAtEnd() { return curr == tail; }
+  public boolean isAtEnd() {
+      return curr == tail;
+  }
 
   // Return current element value. Note that null gets returned if curr is at the tail
   public Object getValue() {
-    return curr.element();
+    return curr.getData();
   }
-
-
-
-
-    }
-
-
-
-
-
-
-
-
-
 }
