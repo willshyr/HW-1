@@ -290,7 +290,7 @@ public class CircularLList<T> implements List<T> {
         if ((pos < 0 ) || (pos > this.size)) { // pos = size -> append()
             return false;
         }
-        curr = head; // head's position = 0
+        this.curr = this.head; // head's position = 0
         for (int i = 0; i <= pos; i++) {  // < = ??
             this.curr = this.curr.next; // update curr
         }

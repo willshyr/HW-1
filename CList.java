@@ -70,19 +70,19 @@ public class CList<T> implements List<T> {
         public void setData (T d) {
             this.data = d;
         }
-            
+
         public Node getNext(){
             return this.next;
         }
-        
+
         public Node getPrev(){
             return this.prev;
         }
-    
+
         public void setNext(Node n){
             this.next = n;
         }
-        
+
         public void setPrev(Node p){
             this.prev = p;
         }
@@ -146,7 +146,7 @@ public class CList<T> implements List<T> {
             this.curr.prev = this.curr.next; // link curr.prev to the new element
             this.tail = this.curr.next;
         } else if (this.size == 2) {
-            this.curr = new Node(t, this.curr, this.tail); //this.tail is the same as this.curr.next???? 
+            this.curr = new Node(t, this.curr, this.tail); //this.tail is the same as this.curr.next????
             this.curr.prev.next = this.curr;
             this.curr.next.prev = this.curr;
         } else {
@@ -179,12 +179,12 @@ public class CList<T> implements List<T> {
             Node temp = this.curr;        // hold onto original position
             this.curr = this.tail;        // move curr to the tail
             this.insert2(t);              // code reuse!
+            this.tail = this.curr;        // move taill to curr
             this.curr = temp;             // restore cursor to original position
         }
         this.size++;
         return true;
     }
-
 //remove() removes the current item & places curr on the
 //next item (if there is one)
 
@@ -286,7 +286,7 @@ public class CList<T> implements List<T> {
         if (this.curr != this.head) {
             this.curr = this.curr.prev;
         } else { //head == curr
-            System.out.println("Cursor is at the front."); 
+            System.out.println("Cursor is at the front.");
         }    // next and prev cannot move beyond the original start/end
     }
 
@@ -297,8 +297,8 @@ public class CList<T> implements List<T> {
         if (this.curr != this.tail) {
             this.curr = this.curr.next;
         } else {
-            System.out.println("Curose is at the end.");
-        }        
+            System.out.println("Cursor is at the end.");
+        }
     }
 
     /**
@@ -306,7 +306,7 @@ public class CList<T> implements List<T> {
      * @return the current position in the list
      */
     public int currPos() {
-        Node temp = head; 
+        Node temp = head;
         int i = 0;
         for (i = 0; this.curr != temp; i++) {
             temp = temp.next;
@@ -323,7 +323,7 @@ public class CList<T> implements List<T> {
         if ((pos < 0 ) || (pos >= this.size)) { // pos = size -> append()
             return false;
         }
-        curr = head; // head's position = 0
+        this.curr = this.head; // head's position = 0
         for (int i = 0; i < pos; i++) {  // cannot move beyond the end
             this.curr = this.curr.next; // update curr
         }
@@ -335,7 +335,7 @@ public class CList<T> implements List<T> {
      * @return true if the current position is the end of the list
      */
     public boolean isAtEnd() {
-        return curr == tail;
+        return this.curr == this.tail;
     }
 
   // Return current element value. Note that null gets returned if curr is at the tail
