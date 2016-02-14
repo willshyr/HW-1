@@ -63,11 +63,11 @@ public class CircularLList<T> implements List<T> {
             this.next = n;
         }
 
-        public T getData () {
+        public T getData() {
             return this.data;
         }
 
-        public void setData (T d) {
+        public void setData(T d) {
             this.data = d;
         }
 
@@ -150,7 +150,7 @@ public class CircularLList<T> implements List<T> {
 
     public boolean append2(T t) {
         if (this.isEmpty() || this.size == 1) {  // empty list
-            this.insert2();  // code reuse
+            this.insert2(t);  // code reuse
         } else {
             Node temp = this.curr;        // hold onto original position
             this.curr = this.tail;        // move curr to the tail
@@ -308,7 +308,7 @@ public class CircularLList<T> implements List<T> {
   }
 
   // Return current element value. Note that null gets returned if curr is at the tail
-  public Object getValue() {
+  public T getValue() {
     return curr.getData();
   }
 }
