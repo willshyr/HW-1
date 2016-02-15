@@ -63,11 +63,15 @@ public class CList<T> implements List<T> {
             this.next = n;
         }
 
-        public T getData () {
+        public Node getCurr() {
+            return this.curr
+        }
+
+        public T getData() {
             return this.data;
         }
 
-        public void setData (T d) {
+        public void setData(T d) {
             this.data = d;
         }
 
@@ -342,7 +346,7 @@ public class CList<T> implements List<T> {
 
   // Return current element value. Note that null gets returned if curr is at the tail
     public T getValue() {
-        return curr.getData();
+        return this.curr.data;
     }
     public void cnext() {
         this.curr = this.curr.next;
