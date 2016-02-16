@@ -7,13 +7,12 @@ public class testCList {
         CutthroatKitchen x = new CutthroatKitchen();
         for (String i : a) {
             CookingStation station = new CookingStation(i);
-            x.insert2(station);
+            x.insert(station);
 
         }
         // x.moveToPos(2);
         System.out.println(x.getValue());
         x.remove();
-        System.out.println(x.length());
         System.out.println(x);
         System.out.println(x.getValue());
     }

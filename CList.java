@@ -65,14 +65,6 @@ public class CList<T> implements List<T> {
             this.next = n;
         }
 
-        // public T getData () {
-        //     return this.data;
-        // }
-        //
-        // public void setData (T d) {
-        //     this.data = d;
-        // }
-
         public Node getNext(){
             return this.next;
         }
@@ -102,7 +94,6 @@ public class CList<T> implements List<T> {
     /**
      * Create an empty list w/o sentinels.
      */
-
     public CList() {
         this.clear(); //code reuse
     }
@@ -112,24 +103,7 @@ public class CList<T> implements List<T> {
      */
     public void clear() {
         this.size = 0;
-        this.head = null;
-        this.tail = null;
-        //this.head.next = this.tail;
-        this.curr = new Node(null, null, null);  // because insert will insert after curr
     }
-
-    public void clear2() {
-        this.size = 0;
-    }
-
-    public void clear3() {
-        this.head = new Node(null, null, null);
-        this.tail = new Node(null, this.head, null);
-        this.head.next = this.tail;
-        this.curr = this.head;  // because insert will insert after curr
-    }
-
-
 
     /**
      * Insert a value at (after) the current location.
@@ -138,41 +112,6 @@ public class CList<T> implements List<T> {
      * @return true if successfully inserted, false otherwise
      */
     public boolean insert(T t) {
-        Node n = new Node(t, this.curr, this.curr.next);
-        n.prev.next = n;   // connect left neighbor
-        n.next.prev = n;   // connect right neighbor
-        this.size++;       // curr still point to the original node
-        return true;
-    }
-
-    //insert() cannot add at the end (only 0 to length-1)
-    // insert AFTER the current position.
-    public boolean insert3(T t) {
-        if (this.isEmpty()) { //empty list
-            this.curr = new Node(t, this.curr, this.curr);
-            this.head = this.curr;
-            this.tail = this.curr;
-        } else if (this.size == 1) {  // size = 1
-            this.curr.next = new Node(t, this.curr, this.curr);
-            this.curr.prev = this.curr.next; // link curr.prev to the new element
-            this.tail = this.curr.next;
-        } else if (this.size == 2) {
-            this.curr = new Node(t, this.curr, this.tail); //this.tail is the same as this.curr.next????
-            this.curr.prev.next = this.curr;
-            this.curr.next.prev = this.curr;
-        } else {
-            this.curr = new Node(t, this.curr, this.curr.next);
-            this.curr.prev.next = this.curr;
-            this.curr.next.prev = this.curr;
-        }
-        this.size++;
-        return true;
-    }
-
-    //Will (160214)
-    //insert() cannot add at the end (only 0 to length-1)
-    // insert AFTER the current position.
-    public boolean insert2(T t) {
         if (this.isEmpty()) { //empty list
             this.curr = new Node(t, this.curr, this.curr);
             this.head = this.curr;
@@ -205,21 +144,21 @@ public class CList<T> implements List<T> {
      * @param t the value to append
      * @return true if successfully appended, false otherwise
      */
-    public boolean append(T t) {
-        Node temp = this.curr;        // hold onto original position
-        this.curr = this.tail.prev;   // move to before the tail sentinel
-        this.insert(t);               // code reuse!
-        this.curr = temp;             // restore cursor to original position
-        return true;
-    }
+    // public boolean append(T t) {
+    //     Node temp = this.curr;        // hold onto original position
+    //     this.curr = this.tail.prev;   // move to before the tail sentinel
+    //     this.insert(t);               // code reuse!
+    //     this.curr = temp;             // restore cursor to original position
+    //     return true;
+    // }
 
-    public boolean append2(T t) {
+    public boolean append(T t) {
         if (this.isEmpty() || this.size == 1) {  // empty list
-            this.insert2(t);  // code reuse
+            this.insert(t);  // code reuse
         } else {
             Node temp = this.curr;        // hold onto original position
             this.curr = this.tail;        // move curr to the tail
-            this.insert2(t);              // code reuse!
+            this.insert(t);              // code reuse!
             this.tail = this.curr;        // move taill to curr
             this.curr = temp;             // restore cursor to original position
         }
@@ -240,10 +179,11 @@ public class CList<T> implements List<T> {
             return val;
         } else {
             T val = this.curr.data;
+            // this.curr = this.curr.next;
+            this.curr.prev.next = this.curr.next;
+            this.curr.next.prev = this.curr.prev;
             this.curr = this.curr.next;
-            this.curr.prev = this.curr.prev.prev;
-            this.curr.prev.next = this.curr;
-            this.curr.next.prev = this.curr;
+            // this.curr.next.prev = this.curr;
             this.size--;
             return val;
         }
@@ -366,10 +306,6 @@ public class CList<T> implements List<T> {
         return this.curr == this.tail;
     }
 
-  // Return current element value. Note that null gets returned if curr is at the tail
- //   public T getValue() {
- //       return curr.getData();
- //   }
     public void cnext() {
         this.curr = this.curr.next;
     }
@@ -377,20 +313,13 @@ public class CList<T> implements List<T> {
         this.curr = this.curr.prev;
     }
 
-    /**
-     * get curr
-     */
-    public Node getCurr() {
-        return this.curr;
-    }
-    //fuck. why do you need getCurr()???
-
-    public String toString() { //need to change the format
+    public String toString() {
         String result = "[ ";
+        Node temp = this.curr;
         this.moveToStart();
         System.out.println("size = " + this.size);
         for (int i = 0; i < this.size; i++) {
-            result += this.curr.data.toString();   // calls toString implicitly
+            result += this.curr.data.toString();
             // System.out.println(curr.data);
             if (i < this.size - 1) {
                 result += " ";
@@ -398,6 +327,7 @@ public class CList<T> implements List<T> {
             }
         }
         result += " ]";
+        this.curr = temp;
         return result;
     }
 

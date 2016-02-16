@@ -13,7 +13,7 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 
 	// put a new dish at the end of the station
 	public void addItem(CookingItem it) {
-		this.station.insert2(it); //need to change method name
+		this.station.insert(it); //need to change method name
 	}
 
 	// simulate one minute time passing for this station
@@ -27,11 +27,11 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 				station.next();
 			}
 		}
-		while (!station.isAtEnd()) {
-			station.getValue().tick(); //.curr
-			station.next();
-		}
-		station.getValue().tick(); //.curr (tick the last item in that station)
+		// while (!station.isAtEnd()) {
+		// 	station.getValue().tick(); //.curr
+		// 	station.next();
+		// }
+		// station.getValue().tick(); //.curr (tick the last item in that station)
 		// if (itemIsRemoved) {
 		// 	station.moveToPos(itemPos);
 		// 	//bc curr is already pointing at the item next to the item being removed

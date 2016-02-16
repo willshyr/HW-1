@@ -7,15 +7,15 @@ public class test {
         // CutthroatKitchen x = new CutthroatKitchen();
         // for (String i : a) {
         //     CookingStation station = new CookingStation(i);
-        //     x.insert2(station);
+        //     x.insert(station);
         // }
         // // x.moveToPos(2);
         // System.out.println(x.length());
         // System.out.println(x.getValue());
-        String fname = "sim";
+        String prefix = "sim";
         int[] fnum = {0, 1, 2, 3};
-        String[] fname = new String[fnum.length()]
-        for (int i = 0; i < fnum.length(); i++) {
+        String[] fname = new String[fnum.length];
+        for (int i = 0; i < fnum.length; i++) {
             fname[i] = "sim" + Integer.toString(fnum[i]) + ".txt";
             // System.out.println(fname);
         }
@@ -51,7 +51,7 @@ public class test {
             name = infile.nextLine();
             line = infile.nextLine();
             CookingStation station = new CookingStation(name);
-            kitchen.insert2(station);
+            kitchen.insert(station);
             while (!line.equals("")) {
                 inline = new Scanner(line);
                 item = inline.next();
@@ -61,7 +61,7 @@ public class test {
                 name += " " + item + " " + time + " " + under + " " + over;
                 line = infile.nextLine();
                 foodItem = new CookingItem(item, time, under, over);
-                kitchen.getValue().insert2(foodItem);
+                kitchen.getValue().insert(foodItem);
             }
             // System.out.println(name);
         }
