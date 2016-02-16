@@ -19,17 +19,17 @@ public class CookingItem implements CookingItemInterface {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public CookingItem(String info) {
 		this.information = info;
 	}
 
-	public String getItem(){
+	public String getItem() {
 		return this.item;
 	}
 
-	public String setItem(String i){
+	public String setItem(String i) {
 		return this.item = i;
 	}
 

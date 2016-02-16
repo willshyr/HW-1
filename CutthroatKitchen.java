@@ -3,23 +3,49 @@ import java.io.*;
 
 public class CutthroatKitchen extends CList<CookingStation> {
 
-	private final int penaltyThreshold = 0;
-	private int removeThreshold; //or int[] ? 
-	private boolean stationIsRemoved = false; 
 
-	public static void main(String[] args) {
+	private final int penaltyThreshold; //= 0; //penaltyThreshold
+	//private int[] remove = {0,1,2,3}; //removeThreshold (or int[] ??)
+	//private String[] filename;// = {"sim0.txt", "sim1.txt", "sim2.txt", "simP.txt"}; //output filenames
+	private boolean stationIsRemoved;// = false;
+	private CList<CookingStation> kitchen; //CList of stations
+	private CookingStation station;
+	//private CList<CookingItem> station;
+
+
+
+	public CutthroatKitchen() {
+		this.kitchen = new CList<CookingStation>();
+		this.station = new CookingStation();
+		this.penaltyThreshold = 0; //penaltyThreshold
+		//remove = new int[4];
+		//remove = {0,1,2,3}; //removeThreshold (or int[] ??)
+		//filename = new String[4];
+		//String[] filename = {"sim0.txt", "sim1.txt", "sim2.txt", "simP.txt"}; //output filenames
+		this.stationIsRemoved = false;
+		//int[] remove = { 0, 1, 2, 3};
+	}
+
+//use outFile as System.out.XXX
+
+
+//PrintWriter outFile = new PrintWriter(new FileWriter("myOutput.txt"));
+
+
+
+	public static void main(String[] args) throws IOException {
 
 
 		System.out.println("This is a CutthroatKitchen game.");
-    	
 
-    	// read items in to each station of the kitchen
-    	Scanner infile = null;
+    	// read items into each station of the kitchen
+    	Scanner inFile = null;
         boolean inerror = false;
+        PrintWriter outFile;
 
         try {
             System.out.println("0 " + args[0] + " should be input filename");
-            infile = new Scanner(new FileReader(args[0]));
+            inFile = new Scanner(new FileReader(args[0]));
         } catch (ArrayIndexOutOfBoundsException a) {
             System.err.println("must give input filename at command line");
             inerror = true;
@@ -31,111 +57,170 @@ public class CutthroatKitchen extends CList<CookingStation> {
             System.err.println("exiting...");
             System.exit(1);
         }
-        
+
         CookingItem itemOne; //items
-        CList<CookingStation> kitchen = new CList<CookingStation>(); //CList of stations
-        CookingStation station; //stations (CList of items)
+        //CList<CookingStation> kitchen = new CList<CookingStation>(); //CList of stations
+        //CookingStation station; //stations (CList of items)
 
+        CutthroatKitchen var = new CutthroatKitchen();
 
-        Scanner inline;
+        Scanner inLine;
         String line;
         String name, item;
         int time, under, over;
-        while (infile.hasNext()) {
-        	station = new CookingStation();
-            name = infile.nextLine(); 
-            line = infile.nextLine(); //one item info
-            station.setStationName(name);
-            while (!line.equals("")) {
-                inline = new Scanner(line);
-                item = inline.next();
-                time = inline.nextInt();
-                under = inline.nextInt();
-                over = inline.nextInt();
-                itemOne = new CookingItem(item, time, under, over);
-                station.addItem(itemOne);
-                //name += " " + item + " " + time + " " + under + " " + over;
-                line = infile.nextLine(); //read the next item info 
-            }
-            kitchen.insert(station); //station w/ its name & items are added to the kitchen CList
-            //prints all items in that station
-            System.out.println("Items in " + station.getStationName() + ": " + station.toString());  
+        int kitchenPenalty = 0;
 
-        }
-        System.out.println("Items in the kitchen: " + kitchen.toString()); 
-	} //end Main 
+        int[] remove = { 0, 1, 2, 3};
+		String[] filename = {"sim0.txt", "sim1.txt", "sim2.txt", "simP.txt"}; //output filenames
 
-	//tick all items at all station; update current station 
+
+       	for (int i = 0; i < remove.length; i++) {
+       		System.out.println("This is the" + i + "round of cutthroatKitchen.");
+       		outFile = new PrintWriter(new FileWriter(filename[i]));
+			while (inFile.hasNext()) {
+        		//CutthroatKitchen cutthroatKitchen = new CutthroatKitchen();
+        		//station = new CookingStation();
+            	name = inFile.nextLine();
+            	line = inFile.nextLine(); //one item info
+            	var.station.setStationName(name);
+            	inLine = new Scanner(line);
+            	while (!line.equals("")) {
+                	//inLine = new Scanner(line);
+                	item = inLine.next();
+                	time = inLine.nextInt();
+                	under = inLine.nextInt();
+                	over = inLine.nextInt();
+                	itemOne = new CookingItem(item, time, under, over);
+                	var.station.addItem(itemOne);
+                	//name += " " + item + " " + time + " " + under + " " + over;
+                	line = inFile.nextLine(); //read the next item info
+            	} //end line.equals while
+            	var.kitchen.insert(var.station); //station w/ its name & items are added to the kitchen CList
+            	inLine.close(); // close inline scanner
+			} //end infile.hasNext() while
+			inFile.close();	// close infile scanner
+
+
+       			while (!var.kitchen.isEmpty()) {
+        			var.tickKitchen(); //every item.timeRemaing() -1;
+        			CookingItem k = var.kitchen.getValue().tend(remove[i], var.penaltyThreshold); //tend to the current item
+        			if (k != null) {
+        				kitchenPenalty += k.penalty();
+        			}
+        			outFile.println(var.kitchen.toString()); //print the state of each station (each item)
+        		} //end kitchen.isEmpty() while
+        	outFile.println("Final penalty was: " + kitchenPenalty);
+        	outFile.close();
+        	System.out.println("Finish one game.");
+        	inFile = new Scanner(new FileReader(args[0])); //re-read the input file
+        } //end for
+        System.out.println("CutthroatKitchen games are finished.");
+    } //end Main
+
+/*
+	    let's start the game!
+        while there is still item in the kitchen
+        i.e., while kitchen is not empty
+        tickKitchen
+
+        for item.toString(), you should only include
+
+        	(item timeRemaining())
+
+        We need to run 4 simulations in the main program (main method).
+        So after each run (output process and final penalty to a file),
+        we need to move inFile and inline Scanner to the beginning of the file.
+        	--> declare new scanner to the file
+        okay great! now move on to the next question.
+        in your tend method. you need to add one thing: calculate the penalty
+
+		you only print out the total penalty after you exit out the while loop
+
+
+
+		int kitchenPenalty = 0;
+       for (int i = 0; i < remove.length; i++) {
+       		outFile = new PrintWriter(new FileWriter(filename[i]));
+       		while (!kitchen.isEmpty()) {
+        		kitchen.tickKitchen(); //every item.timeRemaing() -1;
+        		CookingItem k = kitchen.getValue().tend(remove[i], penaltyThreshold); //tend to the current item
+        		if (k != null) {
+        			kitchenPenalty += k.penalty();
+        		}
+        		outFile.println(kitchen.toString()); //print the state of each station (each item)
+        	} //end while
+        	outFile.println("Final penalty was: " + kitchenPenalty);
+        	outFile.close();
+       }
+  */
+
+	/**
+	* Tick all items at all station; update current station.
+	*/
 	public void tickKitchen() {
 		int stationPos = kitchen.currPos(); //store the "index" of the current station
-		kitchen.moveToStart(); //always tick from the start (therefore cann't do cnext() later) 
+		this.kitchen.moveToStart(); //always tick from the start (therefore cann't do cnext() later)
 		while (!kitchen.isAtEnd()) {
-			kitchen.getValue().tick(); //.curr
-			kitchen.next();
+			this.kitchen.getValue().tick(); //.curr  (i.e. station.tick())
+			this.kitchen.next();
 		}
-		kitchen.getValue().tick(); //.curr (tick the last station('s items) in the kitchen)
-		if (stationIsRemoved) {
-			station.moveToPos(itemPos); 
+		this.kitchen.getValue().tick(); //.curr (tick the last station('s items) in the kitchen)
+		if (this.stationIsRemoved) {
+			station.moveToPos(stationPos);
 			//bc curr is already pointing at the item next to the item being removed
-			isRemoved = false; //update boolean
+			stationIsRemoved = false; //update boolean
 		} else { //move curr to the next item in the station
-			itemPos += 1; //move to the next item (for tend() prupose)
-			itemPos = itemPos % (station.length() -1); 
-			station.moveToPos(itemPos); //move to the next item in the station
+			stationPos += 1; //move to the next item (for tend() prupose)
+			stationPos = stationPos % (station.length() -1);
+			station.moveToPos(stationPos); //move to the next item in the station
 		}
 	}
 
-	/*
-		instead of saying station.length() == 0, you can say kitchen.getCurr()
-		kitchen.getCurr() will give you a station 
-
-	*/
-
 	/**
 	* remove the station (item) from the kitchen (CList)
-	* @return the removed station; null if the station is not removed 
+	* @return the removed station; null if the station is not removed
 	*
 	*/
-	public CookingStation removeStation() {
-		if (kitchen.getValue().isEmpty()) { //station.length() == 0 
-			CookingStation temp = kitchen.getValue(); //store the station that is to be removed
-			kitchen.remove();  //curr is at the next station now
+	public  CookingStation removeStation() {
+		if (this.kitchen.getValue().isEmpty()) { //station.length() == 0
+			CookingStation temp = this.kitchen.getValue(); //store the station that is to be removed
+			this.kitchen.remove();  //curr is at the next station now
 			stationIsRemoved = true;
 			return temp;
 		}
 		return null;
 	}
 
-
 	//160214
-	public void tickKitchen() {
+	/*
+	public void tickKitchen2() {
 		int stationPos = kitchen.currPos(); //counts which station we're at
-		
+
 		//kitchen.curr.tend(removeThreshold[0], this.penaltyThreshold);
-		kitchen.getCurr().tend(removeThreshold[0], this.penaltyThreshold);
+		kitchen.getCurr().tend(removeThreshold, this.penaltyThreshold);
 		kitchen.moveToStart(); // move to the first station in the kichen
-		
+
 		while (!kitchen.isAtEnd()) { // while you haven't reached the last station
 			kitchen.getCurr().tick(); // you tick all items in that station
 			//kitchen.curr.tick();
-			kitchen.next(); //you move to the next station 
+			kitchen.next(); //you move to the next station
 		} //end while
-		kitchen.getCurr().tick(); // tick items in the last station 
-		//kitchen.curr.tick(); 
+		kitchen.getCurr().tick(); // tick items in the last station
+		//kitchen.curr.tick();
 		stationPos += 1; //move to the next station (for tend() purpose)
-		stationPos = stationPos % (kitchen.length()-1); 
+		stationPos = stationPos % (kitchen.length()-1);
 		kitchen.moveToPos(stationPos);
-		//why don't you just do kitchen.cnext() ?? 
+		//why don't you just do kitchen.cnext() ??
 	}
+	*/
 /*
-	//do kitchen.cnext() to move curr station to the next station. 
+	//do kitchen.cnext() to move curr station to the next station.
 
 	in your main method (where the game takes place), you want to do kitchen.cnext() EVERYTIME
 	after you do tend(), regardless of the tend result.
-	
-	if we have an empty station (CList), is it removed automatically?? 
+
+	if we have an empty station (CList), is it removed automatically??
 
 */
-
 
 }

@@ -1,12 +1,12 @@
-public class CookingStation extends CList<CookingItem> {
+public class CookingStation extends CList<CookingItem> implements CookingStationInterface {
 
 	private String stationName; // station name
-	private CList station;
+	private CList<CookingItem> station;
 	private boolean itemIsRemoved = false;
 
 
 	public CookingStation(){
-		station = new CList(); //create an empty station(CList)
+		station = new CList<CookingItem>(); //create an empty station(CList)
 	}
 
 	// put a new dish at the end of the station
@@ -24,13 +24,14 @@ public class CookingStation extends CList<CookingItem> {
 			this.station.next();
 		}
 		station.getValue().tick(); //.curr (tick the last item in that station)
+		
 		if (itemIsRemoved) {
 			this.station.moveToPos(itemPos);
 			//bc curr is already pointing at the item next to the item being removed
-			isRemoved = false; //update boolean
+			itemIsRemoved = false; //update boolean
 		} else { //move curr to the next item in the station
 			itemPos += 1; //move to the next item (for tend() prupose)
-			itemPos = itemPos % (station.length() -1);
+			itemPos = itemPos % (station.length() - 1);
 			station.moveToPos(itemPos); //move to the next item in the station
 		}
 	}
