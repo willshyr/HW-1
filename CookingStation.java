@@ -21,6 +21,12 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 		int itemPos = station.currPos(); //store the "index" of the current item
 		//CookingItem temp = station.getCurr();
 		station.moveToStart(); //always tick from the start (therefore cann't do cnext() later)
+		for (int i = 0; i < station.length(); i++) {
+			station.getValue().tick();
+			if (!station.isAtEnd()) {
+				station.next();
+			}
+		}
 		while (!station.isAtEnd()) {
 			station.getValue().tick(); //.curr
 			station.next();

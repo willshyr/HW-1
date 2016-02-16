@@ -16,16 +16,5 @@ public class CutthroatKitchen extends CList<CookingStation> {
 		this.stationIsRemoved = false;
 	}
 
-	public CookingStation getStation() {
-		return this.kitchen.getValue();
-	}
-
-	public void addStation(CookingStation it) {
-		this.kitchen.insert2(it);
-	}
-
-
-
-
 
 }

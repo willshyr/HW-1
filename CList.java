@@ -235,12 +235,14 @@ public class CList<T> implements List<T> {
         if (this.isEmpty()) {
             return null; // nothing is removed
         } else if (this.size == 1) {
-            T val = this.curr.next.data;
+            T val = this.curr.data;
             this.clear();
             return val;
         } else {
-            T val = this.curr.next.data;
-            this.curr.next = this.curr.next.next;
+            T val = this.curr.data;
+            this.curr = this.curr.next;
+            this.curr.prev = this.curr.prev.prev;
+            this.curr.prev.next = this.curr;
             this.curr.next.prev = this.curr;
             this.size--;
             return val;
