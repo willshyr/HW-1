@@ -1,15 +1,12 @@
 public class CookingItem implements CookingItemInterface {
-
-	private String item;
+	
+	private String item; //item name
 	private int cookingTime;
 	private int checkedTime;
 	private int underdonepenalty;
 	private int overdonepenalty;
 	private String information;
 
-	/**
-	 * Constructor for CookingItem
-	 */
 	public CookingItem(String i, int t, int u, int o) {
 		this.item = i;
 		this.cookingTime = t;
@@ -18,9 +15,6 @@ public class CookingItem implements CookingItemInterface {
 		this.checkedTime = 0;
 	}
 
-	/**
-	 *
-	 */
 	public CookingItem(String info) {
 		this.information = info;
 	}
@@ -45,36 +39,50 @@ public class CookingItem implements CookingItemInterface {
 		this.underdonepenalty = u;
 	}
 
-	public int getOverdonePenalty(){
+	public int getOverdonePenalty() {
 		return this.overdonepenalty;
 	}
 
-	public void setOverdonePenalty(int o){
+	public void setOverdonePenalty(int o) {
 		this.overdonepenalty = o;
 	}
 
-
-	/**
+	/** 
 	* Get the time remaining for cooking this dish.
 	* @return the time in minutes
 	*/
 	public int timeRemaining() {
-		return this.cookingTime;
+		return this.cookingTime; 
 	}
 
-	/** Implements a simulation of one min of time for this item
+	/** 
+	* Implements a simulation of one min of time for this item
 	* by decrementing cooking time by one minute
 	*/
 	public void tick(){
-		this.cookingTime = this.cookingTime - 1;
+		this.cookingTime = this.cookingTime - 1; 
 	}
 
-	/**
+	/** 
 	* Calculate the penalty if this dish were removed now.
 	* @return the penalty
 	*/
 	public int penalty() {
-		return 0; //need to change it
+		if (this.cookingTime < 0) {
+			return this.cookingTime*(-1)*(this.overdonepenalty);
+		} else {
+			return this.cookingTime*this.underdonepenalty; 
+		}
 	}
+
+	/**
+	* String representation of the item and the remaining cookingtime.
+	* @Return
+	* string of cooking item and its remaining cookingtime
+	*/
+	public String toString() {
+		return "( " + this.item + " " + this.cookingTime+")"; 
+	}
+
 
 }

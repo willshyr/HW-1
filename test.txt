@@ -1,0 +1,4 @@
+grill
+steak 10 1 2
+salmon 5 2 1
+chicken 30 3 1

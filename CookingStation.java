@@ -3,15 +3,17 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 	private String stationName; // station name
 	private CList<CookingItem> station;
 	private boolean itemIsRemoved = false;
+	//private int totalStationPenalty = 0;
 
 
-	public CookingStation(){
-		station = new CList<CookingItem>(); //create an empty station(CList)
+	public CookingStation(String name) {
+		this.station = new CList<CookingItem>(); //create an empty station(CList)
+		this.stationName = name;
 	}
 
 	// put a new dish at the end of the station
 	public void addItem(CookingItem it) {
-		station.insert2(it); //need to change method name
+		this.station.insert2(it); //need to change method name
 	}
 
 	// simulate one minute time passing for this station
@@ -20,23 +22,20 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 		//CookingItem temp = station.getCurr();
 		station.moveToStart(); //always tick from the start (therefore cann't do cnext() later)
 		while (!station.isAtEnd()) {
-			this.station.getValue().tick(); //.curr
-			this.station.next();
+			station.getValue().tick(); //.curr
+			station.next();
 		}
 		station.getValue().tick(); //.curr (tick the last item in that station)
-		
-		if (itemIsRemoved) {
-			this.station.moveToPos(itemPos);
-			//bc curr is already pointing at the item next to the item being removed
-			itemIsRemoved = false; //update boolean
-		} else { //move curr to the next item in the station
-			itemPos += 1; //move to the next item (for tend() prupose)
-			itemPos = itemPos % (station.length() - 1);
-			station.moveToPos(itemPos); //move to the next item in the station
-		}
+		// if (itemIsRemoved) {
+		// 	station.moveToPos(itemPos);
+		// 	//bc curr is already pointing at the item next to the item being removed
+		// 	itemIsRemoved = false; //update boolean
+		// } else { //move curr to the next item in the station
+		// 	itemPos += 1; //move to the next item (for tend() prupose)
+		// 	itemPos = itemPos % (station.length() -1);
+		// 	station.moveToPos(itemPos); //move to the next item in the station
+		// }
 	}
-
-
 
 /*
 	but the thing is you can only remove the current item right. so the question is:
@@ -48,14 +47,26 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 	do a boolean var. when remove() returns CookingItem, change that boolean.
 	and then change that boolean back.
 
+	itemIsRemoved = true  when removeThreshold is met
+	stationIsRemoved = true when station.length() == 0 --> station.isEmpty()
+
+
+	it makes more sense to calculate the penalty in kitchen. since you will be return temp.
+	you can just do
+
+		if (!tend(X,X) = null) {
+			totalPenalty +=
+		}
+
 */
 
 // tend the current item, returning it if you decide to remove it
 // (based on remaining time or penalty), or return null if nothing happened.
 	public CookingItem tend(int removeThreshold, int penaltyThreshold) {
 		if (station.getValue().timeRemaining() <= removeThreshold) {
-			CookingItem temp = station.getValue(); //store the item that you'll remove
+			CookingItem temp = (CookingItem) station.getValue(); //store the item that you'll remove
 			station.remove(); //remove the current item from this station
+			//totalStationPenalty += temp.penalty(); //accumulate the penalty
 			itemIsRemoved = true;
 			return temp;
 			//current item is the next item in the station
@@ -65,7 +76,29 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 		}
 	}
 
+	// public void setStationName(String n){
+	// 	stationName = n;
+	// }
+
+	public String getStationName() {
+		return this.stationName;
+	}
+
+	public String toString() {
+		return this.stationName;
+	}
 /*
+	public int getTotalStationPenalty() {
+		return this.totalStationPenalty;
+	}
+*/
+
+/*
+		station is a CList. getValue() returns T (CookingItem). a cooking item has timeRemaining()
+
+
+
+
 		which item do you want to tend to? --> not determined here.
 		how about do
 
@@ -88,22 +121,17 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 		You can only "move to the next station" in the kitchen. thus, this is something you cannot do
 		inside CookingStation class.
 
-
 		if (station.length()  == 0) {
 			kitchen.remove();
 			stationIsRemoved = true; //curr is at the next station now.
 			//then you don't want to do stationPos +1 then.
 
 
-
-
 		remove : remove the item(station) from the CList (kitchen).
 
 		kitchen.remove(station)
 
-
 		if nothing was removed -->
-
 
 
 		kitchen
@@ -113,21 +141,10 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 */
 
 // in your tend method, after you tend one item, you ALWAYS want to move to the next item
-// in your
 //your cutthroatkitchen tick method is not going to work bc if you start at the end, it's not going
 // enter the while loop.
 
 //
-
-
-	public void setStationName(String n){
-		stationName = n;
-	}
-
-	public String getStationName(){
-		return this.stationName;
-	}
-
 
 
 
