@@ -317,7 +317,7 @@ public class CList<T> implements List<T> {
         String result = "[ ";
         Node temp = this.curr;
         this.moveToStart();
-        System.out.println("size = " + this.size);
+        // System.out.println("size = " + this.size);
         for (int i = 0; i < this.size; i++) {
             result += this.curr.data.toString();
             // System.out.println(curr.data);

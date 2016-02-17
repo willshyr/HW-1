@@ -12,6 +12,7 @@ public class test {
         // // x.moveToPos(2);
         // System.out.println(x.length());
         // System.out.println(x.getValue());
+        int penaltyThreshold = 0;
         String prefix = "sim";
         int[] fnum = {0, 1, 2, 3};
         String[] fname = new String[fnum.length];
@@ -40,7 +41,7 @@ public class test {
         }
 
         CookingItem foodItem; //items
-        CutthroatKitchen kitchen = new CutthroatKitchen();
+        CutthroatKitchen k = new CutthroatKitchen();
         Scanner inline;
         String line;
         String name, item;
@@ -51,7 +52,6 @@ public class test {
             name = infile.nextLine();
             line = infile.nextLine();
             CookingStation station = new CookingStation(name);
-            kitchen.insert(station);
             while (!line.equals("")) {
                 inline = new Scanner(line);
                 item = inline.next();
@@ -61,20 +61,63 @@ public class test {
                 name += " " + item + " " + time + " " + under + " " + over;
                 line = infile.nextLine();
                 foodItem = new CookingItem(item, time, under, over);
-                kitchen.getValue().insert(foodItem);
+                station.addItem(foodItem);
             }
+            k.addStation(station);
             // System.out.println(name);
         }
 
-        System.out.println(kitchen); // prints stations in kitchen
-        kitchen.moveToStart();
-        // goes through stations in the kitchen
-        for (int i = 0; i < kitchen.length(); i++) {
-            kitchen.getValue().tick();
-            // System.out.println(kitchen.getValue());
-            if (!kitchen.isAtEnd()) {
-                kitchen.next();
+        System.out.println(k); // prints stations in kitchen
+        System.out.println(k.getStation().isEmpty());
+        // while(!k.isEmpty()) {
+            int j = 1;
+            int temp = k.currPos();
+            k.moveToStart();
+            // goes through stations in the kitchen
+            for (int i = 0; i < k.length(); i++) {
+                k.getValue().tick();
+                // System.out.println(kitchen.getValue());
+                if (!k.isAtEnd()) {
+                    k.next();
+                }
             }
-        }
+            k.moveToPos(temp);
+            k.cnext();
+            // tend to the next item in the station
+            CookingItem x = k.getStation().tend(fnum[j], penaltyThreshold);
+            // System.out.println(k);
+            // k.remove();
+            // System.out.println(k);
+            // System.out.println(k.getValue());
+            // System.out.println(k.getValue().isEmpty());
+            // if (x != null) {
+            //     kitchenPenalty += x.penalty();
+            // }
+            // if (k.getValue().isEmpty()) {
+            //     k.remove();
+            // }
+            // k.cnext();
+            // k.cnext();
+            // System.out.println(k.getValue().isEmpty());
+            // System.out.println(k.getValue());
+        // }
+
+        // System.out.println(k.getValue().getValue()); // prints stations in kitchen
+        // System.out.println(k);
+        // while (!k.isEmpty()) {
+        //tick
+        // while (!k.isEmpty()) {
+        // for (int y = 0; y < 5; y++) {
+
+
+    //
+    //     // }
+    //
+    //     // System.out.println(k.getValue());
+    //     // }
+	// 	// kitchen.moveToPos(temp);
+    //     // System.out.println(k);
+    //     // System.out.print(kitchen);
+    //     // System.out.println();
     }
 }
