@@ -15,7 +15,7 @@ public class testCList {
         System.out.println(x);
         System.out.println(x.getStation());
         System.out.println(x.getStation().isEmpty());
-        System.out.println(x.getStation().tend(1, 0));
+        // System.out.println(x.getStation().tend(1, 0));
         // System.out.print(station.getValue());
         // System.out.println(station.isEmpty());
         // x.cnext();
