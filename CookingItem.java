@@ -81,7 +81,7 @@ public class CookingItem implements CookingItemInterface {
 	* string of cooking item and its remaining cookingtime
 	*/
 	public String toString() {
-		return "(" + this.item + " " + this.cookingTime + ")"; 
+		return "(" + this.item + " " + this.cookingTime + ")";
 	}
 
 

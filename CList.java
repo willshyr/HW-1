@@ -39,11 +39,10 @@
 public class CList<T> implements List<T> {
 
 
-/**
+    /**
      * Inner doubly linked Node class for convenience.
      * Note that the generic type is implied since we are within DLList<T>.
      */
-
     public class Node {
 
         /** The data in the element. */
@@ -64,22 +63,21 @@ public class CList<T> implements List<T> {
             this.prev = p;
             this.next = n;
         }
-
-        public Node getNext(){
-            return this.next;
-        }
-
-        public Node getPrev(){
-            return this.prev;
-        }
-
-        public void setNext(Node n){
-            this.next = n;
-        }
-
-        public void setPrev(Node p){
-            this.prev = p;
-        }
+        // public Node getNext(){
+        //     return this.next;
+        // }
+        //
+        // public Node getPrev(){
+        //     return this.prev;
+        // }
+        //
+        // public void setNext(Node n){
+        //     this.next = n;
+        // }
+        //
+        // public void setPrev(Node p){
+        //     this.prev = p;
+        // }
     }
 
     /** Head node. */

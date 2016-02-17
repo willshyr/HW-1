@@ -42,12 +42,12 @@ public class CutthroatKitchen extends CList<CookingStation> {
 		return this.kitchen.toString();
 	}
 
-	public boolean isEmpty() {
-		return this.kitchen.isEmpty();
-	}
+	// public boolean isEmpty() {
+	// 	return this.kitchen.isEmpty();
+	// }
 
-	// public CookingItem tend() {
-	// 	return this.kitchen.getValue().tend();
+	// public CookingItem tend(int r, int p) {
+	// 	return this.getStation().tend(r, p);
 	// }
 	// public boolean foodCooking() {
 	// 	for (int i = 0; i < kitchen.length(); i++) {
