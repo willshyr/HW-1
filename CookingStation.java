@@ -2,7 +2,7 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 
 	private String stationName; // station name
 	private CList<CookingItem> station;
-	private boolean itemIsRemoved = false;
+	// private boolean itemIsRemoved = false;
 	//private int totalStationPenalty = 0;
 
 
@@ -57,9 +57,9 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 	// 	stationName = n;
 	// }
 
-	public String getStationName() {
-		return this.stationName;
-	}
+	// public String getStationName() {
+	// 	return this.stationName;
+	// }
 
 	public String toString() {
 		return this.stationName + " " + this.station.toString();
