@@ -39,6 +39,7 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 // (based on remaining time or penalty), or return null if nothing happened.
 	public CookingItem tend(int removeThreshold, int penaltyThreshold) {
 		this.station.cnext();
+		System.out.println(this.getStationItem().getClass().getName());
 		System.out.println(this.getStationItem().timeRemaining());
 		// System.out.println(this.station.getValue());
 		if (this.getStationItem().timeRemaining() <= removeThreshold) {
