@@ -1,26 +1,33 @@
 //Yu-chi Chang, William Shyr
 //ychang64, wshyr1
-//EN.600.226
+//EN.600.226.02
 //p1
 
 //head & tail are connected, but no sentinel nodes
 //empty list: a null list reference
-//a list w/ a single member (size = 1): head, curr, tail, next, prev point to itself
-//a list w/ n nodes: like DList w/o sentinels, except the head and tail would reference
+//a list w/ a single member (size = 1): head, curr, tail, next, prev
+//point to itself
+//a list w/ n nodes: like DList w/o sentinels, except the head and tail
+//would reference
 //each other.
 
-//HW: implement class CList<E> which implements the interface List<E> using a circular
+//HW: implement class CList<E> which implements the interface List<E> using
+//a circular
 //double linked list implementation.
 
 ///no sentinels --> special cases (empty, one item)
 //be careful with the append() (general, special cases)
-//inserting places an element at curr, to the right of the cursor (between nodes)
-//this action does not change the cursor according to the text implementations of the
+//inserting places an element at curr, to the right of the cursor (between
+//nodes)
+//this action does not change the cursor according to the text implementations
+//of the
 //List interface, meaning that the newly inserted value is now current.
-//i.e. insert() puts the new node before curr val & moves curr item left to the new
+//i.e. insert() puts the new node before curr val & moves curr item left to
+//the new
 //value (do not confuse the concept of cursor or curr node.)
 
-//remove() removes the current item & places the current position reference on the
+//remove() removes the current item & places the current position reference
+//on the
 //next item (if there is one)
 
 
@@ -162,7 +169,8 @@ public class CList<T> implements List<T> {
     }
 
     /**
-     * Remove the current item and places curr on the next item (if there's one)
+     * Remove the current item and places curr on the next item.
+     * (if there's one)
      * @return the value of the element removed, null if list is empty
      */
     public T remove() {
@@ -219,11 +227,10 @@ public class CList<T> implements List<T> {
      */
 
     public boolean isEmpty() {
-        if (this.length() == 0) {
-             return true;
-         } else {
-             return false;
-         }
+        if (this.size == 0) {
+            return true;
+        }
+        return false;
     }
 
     /* ---------- METHODS BELOW THIS LINE ARE NOT IMPLEMENTED ------------ */
@@ -234,8 +241,7 @@ public class CList<T> implements List<T> {
     public void moveToStart() {
         if (this.isEmpty()) {
             this.curr = null;
-        }
-        else {
+        } else {
             this.curr = this.head;
         }
     }
@@ -278,7 +284,7 @@ public class CList<T> implements List<T> {
      * @return the current position in the list
      */
     public int currPos() {
-        Node temp = head;
+        Node temp = this.head;
         int i = 0;
         for (i = 0; this.curr != temp; i++) {
             temp = temp.next;
@@ -292,7 +298,7 @@ public class CList<T> implements List<T> {
      * @return true if successfully changed position, false otherwise
      */
     public boolean moveToPos(int pos) {
-        if ((pos < 0 ) || (pos >= this.size)) { // pos = size -> append()
+        if ((pos < 0) || (pos >= this.size)) { // pos = size -> append()
             return false;
         }
         this.curr = this.head; // head's position = 0
@@ -310,13 +316,21 @@ public class CList<T> implements List<T> {
         return this.curr == this.tail;
     }
 
+    /**
+     * Circular next().
+     */
     public void cnext() {
         this.curr = this.curr.next;
     }
+    /**
+     * Circular prev().
+     */
     public void cprev() {
         this.curr = this.curr.prev;
     }
-
+    /**
+     * @return the data stored
+     */
     public String toString() {
         String result = "[ ";
         Node temp = this.curr;

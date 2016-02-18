@@ -8,7 +8,6 @@ public class CutthroatKitchen extends CList<CookingStation> {
 	private CList<CookingStation> kitchen; //CList of stations
 	// private CookingStation station;
 
-
 	public CutthroatKitchen() {
 		this.kitchen = new CList<CookingStation>();
 		// this.station = new CookingStation(name);

@@ -1,4 +1,8 @@
-public class CookingStation extends CList<CookingItem> implements CookingStationInterface {
+/**
+ *
+ */
+public class CookingStation extends CList<CookingItem>
+	implements CookingStationInterface {
 
 	private String stationName; // station name
 	private CList<CookingItem> station;
@@ -42,12 +46,10 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 	public CookingItem tend(int removeThreshold, int penaltyThreshold) {
 		// this.station.cnext();
 		if (this.getStationItem().timeRemaining() <= removeThreshold) {
-			CookingItem temp = this.getStationItem(); //store the item that you'll remove
-			this.station.remove(); //remove the current item from this station
+			CookingItem temp = this.getStationItem();
+			this.station.remove();
 			// this.station.cnext();
 			return temp;
-			//current item is the next item in the station
-			//can we move to the next item (with the least remainingTime)
 		} else {
 			this.station.cnext();
 			return null; //nothing is removed.

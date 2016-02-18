@@ -73,8 +73,8 @@ public class test {
         // for (int k = 0; k < 7; k++) {
         // kitchen.getStation().getCurrStation().cnext();
         // kitchen.getStation().getCurrStation().cnext();
+        kitchen.getKitchen().moveToStart();
         while(!kitchen.isEmpty()) {
-
             kitchen.tick();
             if (kitchen.getStation().isEmpty()) {
                 kitchen.getKitchen().remove();
