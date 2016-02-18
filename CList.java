@@ -78,6 +78,9 @@ public class CList<T> implements List<T> {
         // public void setPrev(Node p){
         //     this.prev = p;
         // }
+            // public String toString() {
+            //     return this.data;
+            // }
     }
 
     /** Head node. */
@@ -110,20 +113,22 @@ public class CList<T> implements List<T> {
      * @return true if successfully inserted, false otherwise
      */
     public boolean insert(T t) {
-        if (this.isEmpty()) { //empty list
-            this.curr = new Node(t, this.curr, this.curr);
+        if (this.isEmpty()) {
+            this.curr = new Node(t, null, null);
+            this.curr.next = this.curr;
+            this.curr.prev = this.curr;
             this.head = this.curr;
             this.tail = this.curr;
         } else if (this.size == 1) {  // size = 1
             this.curr = new Node(t, this.curr, this.curr);
-            // link curr.prev to the new element
-            this.curr.prev.next = this.curr;
-            this.tail = this.curr;
-        } else if (this.size == 2) {
-            this.curr = new Node(t, this.curr, this.curr.next);
             this.curr.prev.next = this.curr;
             this.curr.next.prev = this.curr;
             this.tail = this.curr;
+        // } else if (this.size == 2) {
+        //     this.curr = new Node(t, this.curr, this.curr.next);
+        //     this.curr.prev.next = this.curr;
+        //     this.curr.next.prev = this.curr;
+        //     this.tail = this.curr;
         } else {
             this.curr = new Node(t, this.curr, this.curr.next);
             this.curr.prev.next = this.curr;
@@ -142,14 +147,6 @@ public class CList<T> implements List<T> {
      * @param t the value to append
      * @return true if successfully appended, false otherwise
      */
-    // public boolean append(T t) {
-    //     Node temp = this.curr;        // hold onto original position
-    //     this.curr = this.tail.prev;   // move to before the tail sentinel
-    //     this.insert(t);               // code reuse!
-    //     this.curr = temp;             // restore cursor to original position
-    //     return true;
-    // }
-
     public boolean append(T t) {
         if (this.isEmpty() || this.size == 1) {  // empty list
             this.insert(t);  // code reuse
@@ -174,6 +171,15 @@ public class CList<T> implements List<T> {
         } else if (this.size == 1) {
             T val = this.curr.data;
             this.clear();
+            return val;
+        } else if (this.size == 2) {
+            T val = this.curr.data;
+            this.curr = this.curr.next;
+            this.curr.next = this.curr;
+            this.curr.prev = this.curr;
+            this.head = this.curr;
+            this.tail = this.curr;
+            this.size--;
             return val;
         } else {
             T val = this.curr.data;

@@ -24,8 +24,12 @@ public class CutthroatKitchen extends CList<CookingStation> {
 		return this.kitchen.getValue();
 	}
 
+	public CList<CookingStation> getKitchen() {
+		return this.kitchen;
+	}
+
 	public void tick() {
-		int temp = this.kitchen.currPos();
+		int stationPos = this.kitchen.currPos();
 		this.kitchen.moveToStart();
         // goes through stations in the kitchen
         for (int i = 0; i < kitchen.length(); i++) {
@@ -35,25 +39,22 @@ public class CutthroatKitchen extends CList<CookingStation> {
                 this.kitchen.next();
             }
         }
-		this.kitchen.moveToPos(temp);
+		this.kitchen.moveToPos(stationPos);
 	}
+
+	// public void cnext() {
+	// 	this.kitchen.cnext();
+	// }
+	//
+	// public void moveToPos(int pos) {
+	// 	this.kitchen.moveToPos(pos);
+	// }
 
 	public String toString() {
 		return this.kitchen.toString();
 	}
 
-	// public boolean isEmpty() {
-	// 	return this.kitchen.isEmpty();
-	// }
-
-	// public CookingItem tend(int r, int p) {
-	// 	return this.getStation().tend(r, p);
-	// }
-	// public boolean foodCooking() {
-	// 	for (int i = 0; i < kitchen.length(); i++) {
-	// 		kitchen.getValue().tick();
-	// 	}
-	// }
-
-
+	public boolean isEmpty() {
+		return this.kitchen.isEmpty();
+	}
 }

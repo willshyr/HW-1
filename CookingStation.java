@@ -5,7 +5,6 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 	// private boolean itemIsRemoved = false;
 	//private int totalStationPenalty = 0;
 
-
 	public CookingStation(String name) {
 		this.station = new CList<CookingItem>(); //create an empty station(CList)
 		this.stationName = name;
@@ -20,6 +19,9 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 		return this.station.getValue();
 	}
 
+	public CList<CookingItem> getCurrStation() {
+		return this.station;
+	}
 	// simulate one minute time passing for this station
 	public void tick() {
 		int temp = this.station.currPos();
@@ -38,20 +40,18 @@ public class CookingStation extends CList<CookingItem> implements CookingStation
 // tend the current item, returning it if you decide to remove it
 // (based on remaining time or penalty), or return null if nothing happened.
 	public CookingItem tend(int removeThreshold, int penaltyThreshold) {
-		this.station.cnext();
-		System.out.println(this.getStationItem().getClass().getName());
-		System.out.println(this.getStationItem().timeRemaining());
-		// System.out.println(this.station.getValue());
+		// this.station.cnext();
 		if (this.getStationItem().timeRemaining() <= removeThreshold) {
-			CookingItem temp = station.getValue(); //store the item that you'll remove
+			CookingItem temp = this.getStationItem(); //store the item that you'll remove
 			this.station.remove(); //remove the current item from this station
+			// this.station.cnext();
 			return temp;
 			//current item is the next item in the station
 			//can we move to the next item (with the least remainingTime)
 		} else {
+			this.station.cnext();
 			return null; //nothing is removed.
 		}
-
 	}
 
 	// public void setStationName(String n){

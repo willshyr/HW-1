@@ -19,13 +19,13 @@ public class CookingItem implements CookingItemInterface {
 		this.information = info;
 	}
 
-	public String getItem() {
-		return this.item;
-	}
-
-	public String setItem(String i) {
-		return this.item = i;
-	}
+	// public String getItem() {
+	// 	return this.item;
+	// }
+	//
+	// public String setItem(String i) {
+	// 	return this.item = i;
+	// }
 
 	public int getCookingTime() {
 		return this.cookingTime; //time remaining
@@ -60,7 +60,7 @@ public class CookingItem implements CookingItemInterface {
 	* by decrementing cooking time by one minute
 	*/
 	public void tick(){
-		this.cookingTime = this.cookingTime - 1;
+		this.cookingTime += - 1;
 	}
 
 	/**
@@ -69,9 +69,9 @@ public class CookingItem implements CookingItemInterface {
 	*/
 	public int penalty() {
 		if (this.cookingTime < 0) {
-			return this.cookingTime*(-1)*(this.overdonepenalty);
+			return this.cookingTime * (-1) * (this.overdonepenalty);
 		} else {
-			return this.cookingTime*this.underdonepenalty;
+			return this.cookingTime * this.underdonepenalty;
 		}
 	}
 
