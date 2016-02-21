@@ -26,6 +26,7 @@ public class CookingStation extends CList<CookingItem>
 	public CList<CookingItem> getCurrStation() {
 		return this.station;
 	}
+	
 	// simulate one minute time passing for this station
 	public void tick() {
 		int temp = this.station.currPos();
@@ -44,10 +45,11 @@ public class CookingStation extends CList<CookingItem>
 // tend the current item, returning it if you decide to remove it
 // (based on remaining time or penalty), or return null if nothing happened.
 	public CookingItem tend(int removeThreshold, int penaltyThreshold) {
-		// this.station.cnext();
+//		 this.station.cnext();
 		if (this.getStationItem().timeRemaining() <= removeThreshold) {
 			CookingItem temp = this.getStationItem();
 			this.station.remove();
+//			this.station.cprev();
 			// this.station.cnext();
 			return temp;
 		} else {

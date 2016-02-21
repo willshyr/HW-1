@@ -194,8 +194,12 @@ public class CList<T> implements List<T> {
             // this.curr = this.curr.next;
             this.curr.prev.next = this.curr.next;
             this.curr.next.prev = this.curr.prev;
+            if ( this.head == this.curr) {
+            	this.head = this.curr.next;
+            } else if ( this.tail == this.curr) {
+            	this.tail = this.curr.prev;            	
+            }
             this.curr = this.curr.next;
-            // this.curr.next.prev = this.curr;
             this.size--;
             return val;
         }

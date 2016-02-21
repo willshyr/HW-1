@@ -2,22 +2,22 @@ public class CookingItem implements CookingItemInterface {
 
 	private String item; // item name
 	private int cookingTime;
-	private int checkedTime;
+//	private int checkedTime;
 	private int underdonepenalty;
 	private int overdonepenalty;
-	private String information;
+//	private String information;
 
 	public CookingItem(String i, int t, int u, int o) {
 		this.item = i;
 		this.cookingTime = t;
 		this.underdonepenalty = u;
 		this.overdonepenalty = o;
-		this.checkedTime = 0;
+//		this.checkedTime = 0;
 	}
 
-	public CookingItem(String info) {
-		this.information = info;
-	}
+//	public CookingItem(String info) {
+//		this.information = info;
+//	}
 
 	// public String getItem() {
 	// 	return this.item;

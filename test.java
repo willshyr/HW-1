@@ -13,7 +13,7 @@ public class test {
         // System.out.println(x.length());
         // System.out.println(x.getValue());
         int penaltyThreshold = 0;
-        String prefix = "sim";
+//        String prefix = "sim";
         int[] removeThreshold = {0, 1, 2, 3};
         String[] fname = new String[removeThreshold.length];
 
@@ -73,21 +73,45 @@ public class test {
         // for (int k = 0; k < 7; k++) {
         // kitchen.getStation().getCurrStation().cnext();
         // kitchen.getStation().getCurrStation().cnext();
-        kitchen.getKitchen().moveToStart();
+//        kitchen.getKitchen().moveToStart();
+//        kitchen.getKitchen().cnext();
+//        System.out.println(removeThreshold[j]);
+//    	System.out.println(kitchen);
+//        System.out.println(kitchen.getStation());
+//        kitchen.getKitchen().cprev();
+//        System.out.println(kitchen.getStation());
+//        kitchen.getKitchen().prev();
+        /**
+         * Move the cursor at every station to the front.
+         */
+        for (int m = 0; m < 3; m++) {
+            kitchen.getStation().getCurrStation().moveToStart();
+            kitchen.getKitchen().cnext();
+        }
+//        System.out.println(kitchen.getStation());
+//        System.out.println(kitchen.getStation().getStationItem());
         while(!kitchen.isEmpty()) {
             kitchen.tick();
             if (kitchen.getStation().isEmpty()) {
                 kitchen.getKitchen().remove();
             } else {
                 kitchen.getKitchen().cnext();
+//                System.out.println(kitchen.getStation());
+//                System.out.println(kitchen.getStation().getStationItem());
+                CookingItem tendItem = kitchen.getStation().tend(removeThreshold[j], penaltyThreshold);
+                if (tendItem != null) {
+                    kitchenPenalty = tendItem.penalty();
+                }
             }
-            CookingItem tendItem = kitchen.getStation().tend(removeThreshold[j], penaltyThreshold);
-            System.out.println(tendItem);
-            if (tendItem != null) {
-                kitchenPenalty = tendItem.penalty();
+//            System.out.println(kitchen.getStation());
+//            System.out.println(kitchen.getStation().getStationItem());
+//            System.out.println(tendItem);
+            if (kitchen.getStation().isEmpty()) {
+                kitchen.getKitchen().remove();
             }
+        	System.out.println(kitchen);
 
-            System.out.println(kitchen);
+            
         // }
         }
         System.out.println(kitchenPenalty);

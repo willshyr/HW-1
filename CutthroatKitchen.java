@@ -1,18 +1,15 @@
-import java.util.*;
-import java.io.*;
-
 public class CutthroatKitchen extends CList<CookingStation> {
 
-	private final int penaltyThreshold;
-	private boolean stationIsRemoved;
+//	private final int penaltyThreshold;
+//	private boolean stationIsRemoved;
 	private CList<CookingStation> kitchen; //CList of stations
 	// private CookingStation station;
 
 	public CutthroatKitchen() {
 		this.kitchen = new CList<CookingStation>();
 		// this.station = new CookingStation(name);
-		this.penaltyThreshold = 0; //penaltyThreshold
-		this.stationIsRemoved = false;
+//		this.penaltyThreshold = 0;
+//		this.stationIsRemoved = false;
 	}
 
 	public void addStation(CookingStation it) {
@@ -41,17 +38,12 @@ public class CutthroatKitchen extends CList<CookingStation> {
 		this.kitchen.moveToPos(stationPos);
 	}
 
-	// public void cnext() {
-	// 	this.kitchen.cnext();
-	// }
-	//
-	// public void moveToPos(int pos) {
-	// 	this.kitchen.moveToPos(pos);
-	// }
-
 	public String toString() {
 		return this.kitchen.toString();
 	}
+//	public void moveToStart() {
+//		this.kitchen.
+//	}
 
 	public boolean isEmpty() {
 		return this.kitchen.isEmpty();

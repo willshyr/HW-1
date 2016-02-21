@@ -21,7 +21,11 @@ public class testCList {
         //     //     int kitchenPenalty = tendItem.penalty();
         //     // }
         // }
-        System.out.println(kitchen.getStation().getCurrStation().getClass().getName());
+        System.out.println(kitchen);
+        System.out.println(kitchen.getStation());
+
+        kitchen.tick();
+        System.out.println(kitchen.getStation().getCurrStation());
         // kitchen.getStation().cnext();
         // System.out.println(kitchen.getStation());
         // System.out.println(kitchen.getStation());
